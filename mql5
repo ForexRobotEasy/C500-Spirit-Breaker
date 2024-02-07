@@ -1,0 +1,55 @@
+
+// Program: C500 Spirit Breaker
+// Developer's Site: forexroboteasy.com
+// Developer: Forex Robot Easy Team
+
+// Import necessary libraries
+#include <Trade\PositionInfo.mqh>
+#include <Trade\Trade.mqh>
+
+// Custom-Built Strategy
+bool checkMarketConditions()
+{
+    // Add custom logic for checking market conditions
+    // Return true if conditions are met, false otherwise
+}
+
+// Sell Sign Generation
+void generateSellSign()
+{
+    // Place sell order based on custom-built strategy
+    if (checkMarketConditions())
+    {
+        // Get current symbol and bid/ask prices
+        string symbol = Symbol();
+        double bid = SymbolInfoDouble(symbol, SYMBOL_BID);
+        double ask = SymbolInfoDouble(symbol, SYMBOL_ASK);
+        
+        // Calculate stop loss and target profit levels
+        double stopLoss = bid + 50 * Point;
+        double takeProfit = bid - 100 * Point;
+        
+        // Place sell order with risk management parameters
+        int ticket = OrderSend(symbol, OP_SELL, 1.0, ask, 5, stopLoss, takeProfit, 'C500 Spirit Breaker', MagicNumber);
+        
+        if (ticket > 0)
+        {
+            Print('Sell sign generated: Order placed successfully');
+        }
+        else
+        {
+            Print('Failed to place sell order: Error ', GetLastError());
+        }
+    }
+    else
+    {
+        Print('Market conditions not met: No sell sign generated');
+    }
+}
+
+// Entry point of the program
+void OnStart()
+{
+    // Generate sell sign
+    generateSellSign();
+}
